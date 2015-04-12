@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestReturnsJson(t *testing.T) {
+func TestReturns200(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	req, err := http.NewRequest("GET", "http://example.com/tasks", nil)
