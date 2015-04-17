@@ -48,6 +48,20 @@ func TestReturnsJson(t *testing.T) {
 	}
 }
 
+func TestReturns201(t *testing.T) {
+	recorder := httptest.NewRecorder()
+
+	req, err := http.NewRequest("POST", "http://example.com/todos/new", strings.NewReader(`{"name":"Write more tests"}`))
+	if err != nil {
+		t.Errorf("Failed to create request.")
+	}
+
+	TodoCreate(recorder, req)
+	if recorder.Code != http.StatusCreated {
+		t.Errorf("Status code incorrect.")
+	}
+}
+
 // helpers
 func random(min, max int) int {
 	rand.Seed(time.Now().Unix())
