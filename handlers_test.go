@@ -10,6 +10,25 @@ import (
 	"strings"
 )
 
+func TestReturnsIndex(t *testing.T) {
+	recorder := httptest.NewRecorder()
+
+	req, err := http.NewRequest("GET", "http://www.example.com", nil)
+	if err != nil {
+		t.Errorf("Failed to create request.")
+	}
+
+	Index(recorder, req)
+
+	expected := "Welcome!"
+
+	result := recorder.Body.String()
+
+	if strings.Contains(result, expected) != true {
+		t.Errorf("json format incorrect: Actual %s, Expected: %s", result, expected)
+	}
+}
+
 func TestReturns200(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
