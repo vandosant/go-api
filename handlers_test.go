@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func TestReturnsIndex(t *testing.T) {
+func TestIndexReturnsText(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	req, err := http.NewRequest("GET", "http://www.example.com", nil)
@@ -29,7 +29,7 @@ func TestReturnsIndex(t *testing.T) {
 	}
 }
 
-func TestReturns200(t *testing.T) {
+func TestTodosReturns200(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	req, err := http.NewRequest("GET", "http://example.com/todos", nil)
@@ -44,7 +44,7 @@ func TestReturns200(t *testing.T) {
 	}
 }
 
-func TestReturnsJson(t *testing.T) {
+func TestTodoReturnsJson(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	req, err := http.NewRequest("GET", "http://example.com/todos", nil)
@@ -67,7 +67,7 @@ func TestReturnsJson(t *testing.T) {
 	}
 }
 
-func TestReturns201(t *testing.T) {
+func TestTodoCreateReturns201(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	req, err := http.NewRequest("POST", "http://example.com/todos/new", strings.NewReader(`{"name":"Write more tests"}`))
@@ -81,7 +81,7 @@ func TestReturns201(t *testing.T) {
 	}
 }
 
-func TestSavesJSON(t *testing.T) {
+func TestTodoCreateSavesJSON(t *testing.T) {
 	recorder := httptest.NewRecorder()
 
 	rand := random(1, 100)
