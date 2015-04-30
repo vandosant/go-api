@@ -114,6 +114,42 @@ func TestTodoCreateSavesJSON(t *testing.T) {
 	}
 }
 
+func TestTodoShowReturnsJSON(t *testing.T) {
+	recorder := httptest.NewRecorder()
+
+	rand := random(1, 100)
+	todoName := `Write more specs ` + strconv.Itoa(rand)
+	requestBody := `{"name":"`+ todoName + `"}`
+
+	req1, err := http.NewRequest("POST", "http://example.com/todos", strings.NewReader(requestBody))
+	if err != nil {
+		t.Errorf("Failed to create request.")
+	}
+
+	TodoCreate(recorder, req1)
+	if recorder.Code != http.StatusCreated {
+		t.Errorf("Status code incorrect.")
+	}
+
+	body := recorder.Body.String()
+	id := strings.Split(body, ":")
+	idValue := strings.Split(id[1], ",")[0]
+
+	req2, err := http.NewRequest("GET", "http://example.com/todos/"+idValue, nil)
+	if err != nil {
+		t.Errorf("Failed to create request.")
+	}
+
+	TodoShow(recorder, req2)
+
+	result := recorder.Body.String()
+	expected := `"name":"`+ todoName + `"`
+
+	if strings.Contains(result, expected) != true {
+		t.Errorf("json format incorrect: Actual %s, Expected: %s", result, expected)
+	}
+}
+
 // helpers
 func random(min, max int) int {
 	rand.Seed(time.Now().Unix())
